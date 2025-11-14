@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>さきっぽ診断</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="bg-pattern"></div>
+    <header class="site-header">
+      <div class="container">
+        <h1 class="site-title">さきっぽ診断</h1>
+        <p class="site-subtitle">
+          あなたと「理想の彼」の相性、さきっぽだけチラ見せしちゃう診断♡
+        </p>
+      </div>
+    </header>
+
+    <main class="container main-content">
+      <section id="heroSection" class="hero">
+        <div class="hero-image-wrap">
+          <img src="image.png" alt="さきっぽ診断メイン画像" class="hero-image" />
+        </div>
+        <div class="hero-text">
+          <p>
+            「ちゃんと私を大事にしてくれる人って、どんな人なんだろう？」<br />
+            10個の質問に答えるだけで、あなたと“思いやり彼氏”との相性をチェックできる診断です。
+          </p>
+          <p class="hero-note">
+            ※この診断は表向きは<span class="accent">1人1回きり</span>。
+          </p>
+        </div>
+        <button id="startBtn" class="primary-btn large">
+          さっそく診断してみる
+        </button>
+      </section>
+
+      <section id="questionSection" class="card question-section hidden">
+        <div class="question-header">
+          <div class="question-count">
+            Q<span id="currentQuestionNumber">1</span> / 10
+          </div>
+          <div class="gauge-wrap">
+            <div class="gauge-label">相性ゲージ</div>
+            <div class="gauge-bar">
+              <div id="gaugeFill" class="gauge-fill"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="question-body">
+          <p id="questionText" class="question-text"></p>
+          <div class="answer-buttons">
+            <button id="answerABtn" class="answer-btn answer-a" data-answer="A">
+              A
+            </button>
+            <button id="answerBBtn" class="answer-btn answer-b" data-answer="B">
+              B
+            </button>
+          </div>
+          <p id="answerHint" class="answer-hint"></p>
+        </div>
+      </section>
+
+      <section id="resultSection" class="card result-section hidden">
+        <div class="result-image-wrap">
+          <img
+            id="resultImage"
+            class="result-image"
+            alt="診断結果イメージ"
+          />
+        </div>
+        <p class="result-label">診断結果</p>
+        <p class="result-percent">
+          あなたと“思いやり彼氏”の相性は<br />
+          <span id="compatibilityPercent" class="percent"></span>
+        </p>
+        <p id="resultMessage" class="result-message"></p>
+
+        <div class="next-step">
+          <p class="next-step-title">
+            相性が<span id="percentForMessage" class="percent-inline"></span>になったあなたに…
+          </p>
+          <p class="next-step-text">
+            ・理想のデート<br />
+            ・理想の男性<br />
+            をイメージしてもらえたら、きっと相性は<span class="accent">100％</span>に近づきます。<br />
+            「ここをチェック」して、あなたの恋のさきっぽをのぞいてみてください。
+          </p>
+          <button id="moreBtn" class="primary-btn">
+            ここをチェック
+          </button>
+        </div>
+
+        <button id="retryInfoBtn" class="text-link-btn">
+          ※この診断は1人1回まで（24時間後にリセットされます）
+        </button>
+      </section>
+    </main>
+
+    <!-- 診断スタート確認モーダル -->
+    <div id="confirmModal" class="modal hidden">
+      <div class="modal-backdrop"></div>
+      <div class="modal-content">
+        <p class="modal-title">1回きりの診断をやりますか？</p>
+        <p class="modal-text">
+          今日のあなたの本音で答えてみてください。<br />
+          やり直しはできません。
+        </p>
+        <div class="modal-buttons">
+          <button id="confirmStartBtn" class="primary-btn">やる</button>
+          <button id="cancelStartBtn" class="secondary-btn">あとにする</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 診断中モーダル -->
+    <div id="loadingModal" class="modal hidden">
+      <div class="modal-backdrop dark"></div>
+      <div class="modal-content loading">
+        <p class="loading-text">診断中・・・</p>
+        <div class="loading-dots">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1日1回制限　警告モーダル -->
+    <div id="limitModal" class="modal hidden">
+      <div class="modal-backdrop"></div>
+      <div class="modal-content">
+        <p class="modal-title">この診断は1人1回までです</p>
+        <p class="modal-text">
+          前回の診断から24時間経つと<br />
+          またこっそりチャレンジできます♡
+        </p>
+        <div class="modal-buttons single">
+          <button id="limitOkBtn" class="primary-btn">OK</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+  </html>
+
+
