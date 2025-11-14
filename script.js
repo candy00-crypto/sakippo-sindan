@@ -78,7 +78,6 @@ const compatibilityPercent = document.getElementById("compatibilityPercent");
 const percentForMessage = document.getElementById("percentForMessage");
 const resultMessage = document.getElementById("resultMessage");
 const moreBtn = document.getElementById("moreBtn");
-const retryInfoBtn = document.getElementById("retryInfoBtn");
 const resultImage = document.getElementById("resultImage");
 
 let currentIndex = 0;
@@ -254,10 +253,6 @@ answerBBtn.addEventListener("click", () => handleAnswer("B"));
 
 moreBtn.addEventListener("click", () => {
   window.open("https://www.yahoo.co.jp", "_blank");
-});
-
-retryInfoBtn.addEventListener("click", () => {
-  alert("前回の診断から24時間経つと、またこっそり診断ができるようになります。");
 });
 
 
