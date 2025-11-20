@@ -270,6 +270,15 @@ body {
   color: #b3857a;
 }
 
+.question-footer {
+  margin-top: 4px;
+  text-align: left;
+}
+
+.prev-question-btn {
+  font-size: 0.78rem;
+}
+
 .result-section {
   max-width: 720px;
   margin: 0 auto;

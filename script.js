@@ -3,54 +3,64 @@ const LIMIT_HOURS = 24;
 
 const questions = [
   {
-    text: "Q1. 女性への接し方は？",
-    a: "気分で雑に扱う・すぐ否定する",
-    b: "相手の気持ちを考えて言葉を選ぶ",
+    text: "Q1. 恋人が仕事で落ち込んでいたら",
+    a: "まず気持ちに寄り添って受け止める",
+    b: "何も話しかけず、シカトする",
+    correct: "A",
   },
   {
-    text: "Q2. 恋人が疲れてる日にどうする？",
-    a: "「お前の都合なんか知らん」で放置",
-    b: "何も言わずにそばにいてくれる",
+    text: "Q2. 相手が疲れて帰ってきた時は",
+    a: "気づかないふりして自分の好きなことを続ける",
+    b: "「大丈夫？」って隣に座って話を聞くようにする",
+    correct: "B",
   },
   {
-    text: "Q3. ケンカしたときの態度は？",
-    a: "自分が正しい前提でキレる",
-    b: "お互い落ち着いて話し合おうとする",
+    text: "Q3. 恋人が体調を崩したら",
+    a: "心配の言葉や介抱をして支えようとする",
+    b: "特に何もしない",
+    correct: "A",
   },
   {
-    text: "Q4. 彼女が泣いていたら？",
-    a: "「うざい」で片づける",
-    b: "理由よりもまず気持ちに寄り添う",
+    text: "Q4. 恋人の価値観が自分と違ったら",
+    a: "否定して自分の考えを強要する",
+    b: "そう思う理由を聞いて、なるべく理解しようとする",
+    correct: "B",
   },
   {
-    text: "Q5. デートのときの姿勢は？",
-    a: "めんどい、金も出したくない",
-    b: "一緒にいる時間を大切にしたい",
+    text: "Q5. 恋人が不安になってる時は",
+    a: "「大丈夫？」って言葉をかけたりして安心させる",
+    b: "放置する",
+    correct: "A",
   },
   {
-    text: "Q6. LINEの返信は？",
-    a: "気分で既読無視・ブロック",
-    b: "忙しくても一言返す思いやりがある",
+    text: "Q6. 相手の失敗を見た時",
+    a: "励まして支える側に回る",
+    b: "小馬鹿にしてマウントを取る",
+    correct: "A",
   },
   {
-    text: "Q7. 愛情表現は？",
-    a: "モラハラ・束縛・全て自分中心",
-    b: "言葉でも行動でも安心感を渡せる",
+    text: "Q7. 恋人が泣いてるのを見た時",
+    a: "理由が分からなくても寄り添う",
+    b: "あきれた顔でバカにする",
+    correct: "A",
   },
   {
-    text: "Q8. 彼女が弱い部分を見せてきたら？",
-    a: "「めんどい」で拒絶",
-    b: "話す気になるまで側にいてくれる",
+    text: "Q8. 会う予定がなかなか合わないとき",
+    a: "感情的になって怒る",
+    b: "会えるタイミングを一緒に探す",
+    correct: "B",
   },
   {
-    text: "Q9. 女の子の体目的だけの行動は？",
-    a: "ノリで手を出す・扱いが雑",
-    b: "心が繋がった人を大切にしたい",
+    text: "Q9. 恋人が自分と違う意見を言った時",
+    a: "話を聞いて、理解した上で自分の意見を伝える",
+    b: "論破して黙らせる",
+    correct: "A",
   },
   {
-    text: "Q10. 長く続く恋愛に必要なのは？",
-    a: "駆け引き・支配・気まぐれ",
-    b: "信頼・安心・対等な関係",
+    text: "Q10. コンプレックスを持っていると知った時",
+    a: "気持ちを尊重して大切に扱う",
+    b: "馬鹿にして弱点として利用する",
+    correct: "A",
   },
 ];
 
@@ -73,6 +83,7 @@ const gaugeFill = document.getElementById("gaugeFill");
 const answerABtn = document.getElementById("answerABtn");
 const answerBBtn = document.getElementById("answerBBtn");
 const answerHint = document.getElementById("answerHint");
+const prevQuestionBtn = document.getElementById("prevQuestionBtn");
 
 const compatibilityPercent = document.getElementById("compatibilityPercent");
 const percentForMessage = document.getElementById("percentForMessage");
@@ -81,8 +92,8 @@ const moreBtn = document.getElementById("moreBtn");
 const resultImage = document.getElementById("resultImage");
 
 let currentIndex = 0;
-let countA = 0;
 let answered = false;
+let userAnswers = new Array(questions.length).fill(null);
 
 function hasLimit() {
   const stored = localStorage.getItem(START_KEY);
@@ -120,18 +131,19 @@ function closeLoadingModal() {
 
 function resetState() {
   currentIndex = 0;
-  countA = 0;
   answered = false;
+  userAnswers = new Array(questions.length).fill(null);
   resultSection.classList.add("hidden");
   questionSection.classList.remove("hidden");
-   if (heroSection) {
+  if (heroSection) {
     heroSection.classList.add("quiz-mode-hidden");
   }
   updateQuestion();
 }
 
 function updateGauge() {
-  const progress = (currentIndex / questions.length) * 100;
+  const answeredCount = userAnswers.filter((a) => a !== null).length;
+  const progress = (answeredCount / questions.length) * 100;
   gaugeFill.style.width = `${progress}%`;
 }
 
@@ -139,34 +151,64 @@ function updateQuestion() {
   const q = questions[currentIndex];
   currentQuestionNumber.textContent = currentIndex + 1;
   questionText.textContent = q.text;
-  answerABtn.textContent = `A. ${q.a}`;
-  answerBBtn.textContent = `B. ${q.b}`;
+  answerABtn.textContent = q.a;
+  answerBBtn.textContent = q.b;
 
   if (currentIndex === 0) {
-    answerHint.textContent = "直感で、いちばん「リアルにいそう」と思う方を選んでね♡";
+    answerHint.textContent = "直感で、これかもと思う方を選んでね♡";
   } else if (currentIndex < questions.length - 1) {
     answerHint.textContent = "テンポよく答えていくほど、本音に近づいていきます。";
   } else {
     answerHint.textContent = "これが最後の質問。ドキドキしながら選んでみてください。";
   }
 
+  // 1問目のときは戻るボタンを非表示
+  if (prevQuestionBtn) {
+    if (currentIndex === 0) {
+      prevQuestionBtn.classList.add("hidden");
+    } else {
+      prevQuestionBtn.classList.remove("hidden");
+    }
+  }
+
   updateGauge();
 }
 
 function calcCompatibility() {
-  if (countA === 0) return 98;
-  if (countA <= 2) return 95;
+  let wrongCount = 0;
+  userAnswers.forEach((ans, index) => {
+    if (ans && ans !== questions[index].correct) {
+      wrongCount += 1;
+    }
+  });
+  if (wrongCount === 0) return 98;
+  if (wrongCount <= 2) return 95;
   return 90;
 }
 
 function getResultMessage(percent) {
   if (percent === 98) {
-    return "理想の彼との相性はほぼ満点級！あなたの感覚はかなり“自分を大切にしてくれる人”に向いています。このまま「安心できる愛情」を選び続ければ、幸せな恋が長く続きそう。";
+    return (
+      "98%（運命級・ほぼ理想の相手）\n\n" +
+      "【運命レベルで相性バッチリ…！】\n" +
+      "ここまで一致するの、正直びっくり…\n" +
+      "価値観も温度感も、さきっぽが“こうされたら嬉しい”って部分を\n" +
+      "自然に分かってくれる人ってなかなかいないのに…。\n\n" +
+      "もし現実に出会ってたら、何気なく隣に座って\n" +
+      "当たり前に仲良くなってた気がする…♡\n\n" +
+      "距離を縮めたら、恋に落ちるまでたぶん時間かからないと思います♡"
+    );
   }
   if (percent === 95) {
-    return "かなりいい線いっている相性です。少しだけ“ダメな彼”を許しちゃうクセがあるかも？でも、ちゃんと大事にしてくれる人を見抜く目も持っています。あと一歩、自分の心地よさを優先してみて。";
+    return (
+      "95%（ほぼ理想・恋愛圏内）\n\n" +
+      "めちゃくちゃ相性いい。恋人候補ゾーン♡ 考え方も近いし、話も合いそうで、「この人なら素でいられるかも」って思える距離感。まだ全部が完璧に噛み合ってるわけじゃないけど、その“余白”が逆にワクワクする…♡ これから仲が深まるほど、もっと惹かれていくタイプの相性です♡"
+    );
   }
-  return "まだまだ“優しさ”よりも“刺激”を選びがちな相性かも。でも、ここから「どうされたいか」を知っていけば、恋の選び方は変えられます。自分を雑に扱う人からは、ちゃんと距離を取ってOK！";
+  return (
+    "90%（十分高い・これから本命に育つ関係）\n\n" +
+    "スタート地点からもう好相性だし、ちゃんと向き合ってくれたら普通に好きになると思う。少し価値観の違いもあるけど、そこを埋めるやり取りがむしろ“仲良くなるきっかけ”になりそう。「知っていくほど本命候補になる関係」って感じ…♡"
+  );
 }
 
 function showResult() {
@@ -179,13 +221,13 @@ function showResult() {
     let src = "";
     let alt = "";
     if (percent === 98) {
-      src = "Image_fx - 2025-10-28T134550.371.jpg";
+      src = "IMG_8787.jpg";
       alt = "相性98％の診断結果イメージ";
     } else if (percent === 95) {
-      src = "Image_fx - 2025-10-28T134525.147.jpg";
+      src = "IMG_8788.jpg";
       alt = "相性95％の診断結果イメージ";
     } else {
-      src = "Image_fx - 2025-10-28T134437.585.jpg";
+      src = "IMG_8786.JPG";
       alt = "相性90％の診断結果イメージ";
     }
     resultImage.src = src;
@@ -200,13 +242,11 @@ function handleAnswer(answer) {
   if (answered) return;
   answered = true;
 
-  if (answer === "A") {
-    countA += 1;
-  }
+  userAnswers[currentIndex] = answer;
 
-  currentIndex += 1;
+  const isLast = currentIndex === questions.length - 1;
 
-  if (currentIndex >= questions.length) {
+  if (isLast) {
     updateGauge();
     openLoadingModal();
     setTimeout(() => {
@@ -215,6 +255,7 @@ function handleAnswer(answer) {
       answered = false;
     }, 3000);
   } else {
+    currentIndex += 1;
     setTimeout(() => {
       answered = false;
       updateQuestion();
@@ -252,7 +293,18 @@ answerABtn.addEventListener("click", () => handleAnswer("A"));
 answerBBtn.addEventListener("click", () => handleAnswer("B"));
 
 moreBtn.addEventListener("click", () => {
-  window.open("https://www.yahoo.co.jp", "_blank");
+  window.open(
+    "https://note.com/preview/n667f58ff6ee1?prev_access_key=ed086b68164313c16194264a73c93755",
+    "_blank"
+  );
 });
+
+if (prevQuestionBtn) {
+  prevQuestionBtn.addEventListener("click", () => {
+    if (currentIndex === 0 || answered) return;
+    currentIndex -= 1;
+    updateQuestion();
+  });
+}
 
 

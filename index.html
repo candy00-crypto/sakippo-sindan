@@ -3,16 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>さきっぽ診断</title>
+    <title>さきっぽ相性診断</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <div class="bg-pattern"></div>
     <header class="site-header">
       <div class="container">
-        <h1 class="site-title">さきっぽ診断</h1>
+        <h1 class="site-title">さきっぽ相性診断</h1>
         <p class="site-subtitle">
-          あなたと「理想の彼」の相性、さきっぽだけチラ見せしちゃう診断♡
+          あなたとさきっぽの相性を確かめちゃう診断です♡
         </p>
       </div>
     </header>
@@ -20,15 +20,19 @@
     <main class="container main-content">
       <section id="heroSection" class="hero">
         <div class="hero-image-wrap">
-          <img src="image.png" alt="さきっぽ診断メイン画像" class="hero-image" />
+          <img
+            src="IMG_8785.PNG"
+            alt="さきっぽ相性診断メイン画像"
+            class="hero-image"
+          />
         </div>
         <div class="hero-text">
           <p>
             「ちゃんと私を大事にしてくれる人って、どんな人なんだろう？」<br />
-            10個の質問に答えるだけで、あなたと“思いやり彼氏”との相性をチェックできる診断です。
+            10個の質問に答えるだけで、あなたとさきっぽとの相性をチェックできる診断です。
           </p>
           <p class="hero-note">
-            ※この診断は表向きは<span class="accent">1人1回きり</span>。
+            ※この診断は<span class="accent">1人1回きり</span>。
           </p>
         </div>
         <button id="startBtn" class="primary-btn large">
@@ -60,6 +64,15 @@
             </button>
           </div>
           <p id="answerHint" class="answer-hint"></p>
+          <div class="question-footer">
+            <button
+              id="prevQuestionBtn"
+              class="text-link-btn prev-question-btn"
+              type="button"
+            >
+              ← ひとつ前の質問に戻る
+            </button>
+          </div>
         </div>
       </section>
 
@@ -73,7 +86,7 @@
         </div>
         <p class="result-label">診断結果</p>
         <p class="result-percent">
-          あなたと“思いやり彼氏”の相性は<br />
+          あなたとさきっぽの相性は・・・<br />
           <span id="compatibilityPercent" class="percent"></span>
         </p>
         <p id="resultMessage" class="result-message"></p>
@@ -83,10 +96,14 @@
             相性が<span id="percentForMessage" class="percent-inline"></span>になったあなたに…
           </p>
           <p class="next-step-text">
-            ・理想のデート<br />
-            ・理想の男性<br />
-            をイメージしてもらえたら、きっと相性は<span class="accent">100％</span>に近づきます。<br />
-            「ここをチェック」して、あなたの恋のさきっぽをのぞいてみてください。
+            今回の診断で、<br />
+            あなたとさきっぽが相性いいって分かったからこそ…<br />
+            もっとさきっぽのこと知ってほしいし、<br />
+            特別な距離で繋がりたい。<br /><br />
+            だから、ここから先に進む人だけに<br />
+            特典を3つ用意しました。<br />
+            さきっぽの“距離近めな世界”へどうぞ。<br /><br />
+            ↓↓受け取って、もっと近くに来て…💗
           </p>
           <button id="moreBtn" class="primary-btn">
             ここをチェック
