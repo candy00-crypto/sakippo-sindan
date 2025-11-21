@@ -1,5 +1,7 @@
 const START_KEY = "sakippo_diagnosis_started_at";
 const LIMIT_HOURS = 24;
+// 2025-11-21 17:20 (JST) を過ぎたら一度リセットするための時刻
+const RESET_TIMESTAMP = new Date("2025-11-21T17:20:00+09:00").getTime();
 
 const questions = [
   {
@@ -101,7 +103,14 @@ function hasLimit() {
   const startedAt = Number(stored);
   if (Number.isNaN(startedAt)) return false;
 
-  const diffHours = (Date.now() - startedAt) / (1000 * 60 * 60);
+  const now = Date.now();
+
+  // 指定時刻（2025-11-21 17:20）を過ぎていたら制限を解除
+  if (now >= RESET_TIMESTAMP) {
+    return false;
+  }
+
+  const diffHours = (now - startedAt) / (1000 * 60 * 60);
   return diffHours < LIMIT_HOURS;
 }
 
