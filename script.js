@@ -1,7 +1,7 @@
 const START_KEY = "sakippo_diagnosis_started_at";
 const LIMIT_HOURS = 24;
-// 2025-11-21 20:00 (JST) を過ぎたら一度リセットするための時刻
-const RESET_TIMESTAMP = new Date("2025-11-21T20:00:00+09:00").getTime();
+// 2025-11-21 19:55 (JST) を過ぎたら一度リセットするための時刻
+const RESET_TIMESTAMP = new Date("2025-11-21T19:55:00+09:00").getTime();
 
 const questions = [
   {
